@@ -9,3 +9,4 @@ An easy to use slider that features posts and other custom content on the homepa
 - [ ] Custom CSS styling
 - [ ] Specify background position
 - [ ] Include Featured item in menu
+- [ ] Include on only front page or all pages
