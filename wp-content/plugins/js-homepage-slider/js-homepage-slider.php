@@ -117,6 +117,9 @@ class hps_custom_menu {
 	function js_hps_add_custom_nav_fields( $menu_item ) {
 	
 	    $menu_item->featured_image = get_post_meta( $menu_item->ID, '_menu_item_featured_image', true );
+	    $menu_item->cta = get_post_meta( $menu_item->ID, '_menu_item_cta', true );
+	    $menu_item->bgpos_x = get_post_meta( $menu_item->ID, '_menu_item_bgpos_x', true );
+	    $menu_item->bgpos_y = get_post_meta( $menu_item->ID, '_menu_item_bgpos_y', true );
 	    return $menu_item;
 	    
 	}
@@ -134,6 +137,21 @@ class hps_custom_menu {
 	    if ( is_array( $_REQUEST['menu-item-featured-image']) ) {
 	        $featured_image_value = $_REQUEST['menu-item-featured-image'][$menu_item_db_id];
 	        update_post_meta( $menu_item_db_id, '_menu_item_featured_image', $featured_image_value );
+	    }
+
+	    if ( is_array( $_REQUEST['menu-item-cta']) ) {
+	        $cta_value = $_REQUEST['menu-item-cta'][$menu_item_db_id];
+	        update_post_meta( $menu_item_db_id, '_menu_item_cta', $cta_value );
+	    }
+
+	    if ( is_array( $_REQUEST['menu-item-bgpos-x']) ) {
+	        $bgpos_x_value = $_REQUEST['menu-item-bgpos-x'][$menu_item_db_id];
+	        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_x', $bgpos_x_value );
+	    }
+
+	    if ( is_array( $_REQUEST['menu-item-bgpos-y']) ) {
+	        $bgpos_y_value = $_REQUEST['menu-item-bgpos-y'][$menu_item_db_id];
+	        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_y', $bgpos_y_value );
 	    }
 	    
 	}
@@ -189,6 +207,9 @@ class hps_custom_menu {
 					$feat_description = $itemObj->description ?: $itemObj->type_label;
 					$feat_link = $itemObj->url;
 					$feat_id = $itemObj->object_id;
+					$feat_cta = $itemObj->cta;
+					$feat_bgpos_x = $itemObj->bgpos_x;
+					$feat_bgpos_y = $itemObj->bgpos_y;
 					break;
 				}
 				else {
@@ -198,6 +219,9 @@ class hps_custom_menu {
 						$feat_description = $itemObj->description ?: $itemObj->type_label;
 						$feat_link = $itemObj->url;
 						$feat_id = $itemObj->object_id;
+						$feat_cta = $itemObj->cta;
+						$feat_bgpos_x = $itemObj->bgpos_x;
+						$feat_bgpos_y = $itemObj->bgpos_y;
 						break;
 					}
 				}
@@ -208,6 +232,9 @@ class hps_custom_menu {
 				$feat_description = $menu_items[0]->description ?: $menu_items[0]->type_label;
 				$feat_link = $menu_items[0]->url;
 				$feat_id = $menu_items[0]->object_id;
+				$feat_cta = $menu_items[0]->cta;
+				$feat_bgpos_x = $menu_items[0]->bgpos_x;
+				$feat_bgpos_y = $menu_items[0]->bgpos_y;
 			}
 
 			echo "<!-- START: WP Slider Plugin -->\n";
