@@ -6,8 +6,8 @@ An easy to use slider that features posts and other custom content on the homepa
   - [x] Loop into wp_head
 - [x] Allow users to override featured image with specific image
 - [x] Fall back on default post type for categorization, use description if filled out
-- [ ] See More text per item
-- [ ] Specify background position
+- [x] See More text per item
+- [x] Specify background position
 
 _Options Page_
 - [ ] Custom CSS styling
