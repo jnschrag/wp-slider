@@ -35,7 +35,7 @@ jQuery(document).ready(function($){
             var image_value = "/"+media_attachment.url.replace(/^(?:\/\/|[^\/]+)*\//, "");
 
             // Sends the attachment URL to our custom image input field.
-            $('#js_hps_settings[js_hps_fb_image]').val(image_value);
+            $('#fb_image_input').val(image_value);
 
             // Show image & remove image button
             $('.image_container').html("<img src='"+image_value+"' style='width:200px;height:auto;cursor:pointer;' class='choose-meta-image-button' title='Change Image' /><br /><input type='button' id='remove-meta-image-button' class='button' value='Remove Image' />");
@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
         console.log("remove");
 
         // Remove value of the custom field
-        $('#js_hps_settings[js_hps_fb_image]').val('');
+        $('#fb_image_input').val('');
 
         // Destroy the image
         $('.image_container').empty();

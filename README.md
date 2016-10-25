@@ -10,11 +10,11 @@ An easy to use slider that features posts and other custom content on the homepa
 - [x] Specify background position
 
 _Options Page_
-- [ ] Custom CSS styling
+- [x] Custom CSS styling
 - [ ] Include Featured item in menu
 - [ ] Include on only front page or all pages
-- [ ] Default Fallback Image
-- [ ] Default Fallback BG color
-- [ ] See More button default text
+- [x] Default Fallback Image
+- [x] Default Fallback BG color
+- [x] See More button default text
 - [ ] Layout Option (Multiple item vs. single item)
 

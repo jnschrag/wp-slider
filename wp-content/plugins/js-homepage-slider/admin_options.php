@@ -84,8 +84,15 @@ function js_hps_fb_image_render(  ) {
 	global $defaults;
 	$options = wp_parse_args(get_option( 'js_hps_settings', $defaults ), $defaults);
 	?>
-	<input type='hidden' name='js_hps_settings[js_hps_fb_image]' value='<?php echo $options['js_hps_fb_image']; ?>' id='js_hps_settings[js_hps_fb_image]'>
-    <div class='image_container'></div>
+	<input type='hidden' name='js_hps_settings[js_hps_fb_image]' value='<?php echo $options['js_hps_fb_image']; ?>' id='fb_image_input'>
+    <div class='image_container'>
+    	<?php
+    		if($options['js_hps_fb_image']) {
+                    echo "<img src='".$options['js_hps_fb_image']."' style='width:200px;height:auto;cursor:pointer;' class='choose-meta-image-button' title='Change Image' /><br />";
+                    echo '<input type="button" id="remove-meta-image-button" class="button" value="Remove Image" />';
+                }
+        ?>
+    </div>
     <input type="button" id="meta-image-button" class="button choose-meta-image-button" value="<?php _e( 'Choose or Upload an Image', 'text_domain' )?>" />
 	<p class="description">If there is no featured image, this image will be used instead.</p>
 	<?php
@@ -166,9 +173,7 @@ function js_hps_custom_css_render(  ) {
 	global $defaults;
 	$options = wp_parse_args(get_option( 'js_hps_settings', $defaults ), $defaults);
 	?>
-	<textarea cols='80' rows='10' name='js_hps_settings[js_hps_custom_css]'> 
-		<?php echo $options['js_hps_custom_css']; ?>
- 	</textarea>
+	<textarea cols='80' rows='10' name='js_hps_settings[js_hps_custom_css]'><?php echo $options['js_hps_custom_css']; ?></textarea>
  	<p class='description'>Customize the appearance of the menu to match your site's theme.</p>
 	<?php
 
