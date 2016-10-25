@@ -16,6 +16,6 @@ _Options Page_
 - [x] Default Fallback Image
 - [x] Default Fallback BG color
 - [x] See More button default text
-- [ ] Layout Option (Multiple item vs. single item)
-- [ ] Sanitize Options
+- [x] Layout Option (Multiple item vs. single item)
+- [x] Sanitize Options
 

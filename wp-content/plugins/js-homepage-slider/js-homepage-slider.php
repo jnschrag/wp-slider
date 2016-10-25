@@ -82,13 +82,14 @@ class hps_custom_menu {
 		$options = get_option( 'js_hps_settings');
 
 		if($options['js_hps_fb_color']) {
-			$css = "#homepage-slider-container .feature-background {background-color:".$options['js_hps_fb_color'].";}";
+			$css = "#homepage-slider-container .feature-background {background-color:".sanitize_text_field($options['js_hps_fb_color']).";}";
 			$css = wp_kses( $css, array( "\'", '\"' ) );
 			wp_add_inline_style('js-slider-style', $css);
 		}
 
 		if($options['js_hps_custom_css']) {
-			$css = wp_kses( $options['js_hps_custom_css'], array( "\'", '\"' ) );
+			$css = sanitize_text_field($options['js_hps_custom_css']);
+			$css = wp_kses( $css, array( "\'", '\"' ) );
 			wp_add_inline_style('js-slider-style', $css);
 		}
 
@@ -252,7 +253,7 @@ class hps_custom_menu {
 					$feat_description = $itemObj->description ?: $itemObj->type_label;
 					$feat_link = $itemObj->url;
 					$feat_id = $itemObj->object_id;
-					$feat_cta = $itemObj->cta ?: $options['js_hps_default_cta'];
+					$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hps_default_cta']);
 					$feat_bgpos_x = $itemObj->bgpos_x;
 					$feat_bgpos_y = $itemObj->bgpos_y;
 					break;
@@ -264,7 +265,7 @@ class hps_custom_menu {
 						$feat_description = $itemObj->description ?: $itemObj->type_label;
 						$feat_link = $itemObj->url;
 						$feat_id = $itemObj->object_id;
-						$feat_cta = $itemObj->cta ?: $options['js_hps_default_cta'];
+						$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hps_default_cta']);
 						$feat_bgpos_x = $itemObj->bgpos_x;
 						$feat_bgpos_y = $itemObj->bgpos_y;
 						break;
@@ -273,19 +274,26 @@ class hps_custom_menu {
 			}
 			// If no feature image was set, set featured item to the first item in the menu and the image to the fallback image
 			if(!$feat_image) {
-				$feat_image = $options['js_hps_fb_image'];
+				$feat_image = sanitize_text_field($options['js_hps_fb_image']);
 				$feat_title = $menu_items[0]->title;
 				$feat_description = $menu_items[0]->description ?: $menu_items[0]->type_label;
 				$feat_link = $menu_items[0]->url;
 				$feat_id = $menu_items[0]->object_id;
-				$feat_cta = $menu_items[0]->cta ?: $options['js_hps_default_cta'];
+				$feat_cta = $menu_items[0]->cta ?: sanitize_text_field($options['js_hps_default_cta']);
 				$feat_bgpos_x = $menu_items[0]->bgpos_x;
 				$feat_bgpos_y = $menu_items[0]->bgpos_y;
 			}
 
-			echo "<!-- START: WP Slider Plugin -->\n";
-			include('templates/slider.php');
-			echo "<!-- END: WP Slider Plugin -->\n";
+			if($options['js_hps_layout_style'] == "single") {
+				echo "<!-- START: WP Slider Plugin -->\n";
+				include('templates/slider-single.php');
+				echo "<!-- END: WP Slider Plugin -->\n";
+			}
+			else {
+				echo "<!-- START: WP Slider Plugin -->\n";
+				include('templates/slider-side.php');
+				echo "<!-- END: WP Slider Plugin -->\n";
+			}
 		}
 	    
 	}
