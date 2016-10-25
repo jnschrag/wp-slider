@@ -23,10 +23,11 @@ class hps_custom_menu {
 	function __construct() {
 
 		// load the plugin translation files
-		add_action( 'init', array( $this, 'textdomain' ) );
+		add_action( 'init', array( $this, 'js_slider' ) );
 
 		// load CSS & JavaScript
-		add_action( 'wp_enqueue_scripts', array($this, 'js_slider_scripts' ));
+		add_action( 'wp_enqueue_scripts', array($this, 'js_slider_scripts_frontend' ));
+		add_action( 'admin_enqueue_scripts', array($this, 'js_slider_scripts_backend' ));
 
 		/*----------  Backend Filters  ----------*/
 
@@ -35,6 +36,12 @@ class hps_custom_menu {
 
 		// Register Menu Location
 		add_action( 'after_setup_theme', array($this, 'js_hps_register_menu'));
+
+		// Register Options Link
+		add_action( 'admin_menu', array($this, 'js_hps_add_admin_menu' ));
+
+		// Register Plugin Options Page
+		add_action( 'admin_init', 'js_hps_settings_init' );
 		
 		// add custom menu fields to menu
 		add_filter( 'wp_setup_nav_menu_item', array( $this, 'js_hps_add_custom_nav_fields' ) );
@@ -46,12 +53,6 @@ class hps_custom_menu {
 		add_filter( 'wp_edit_nav_menu_walker', array( $this, 'js_hps_edit_walker'), 10, 2 );
 
 		/*----------  Frontend Filters  ----------*/
-		/**
-		
-			TODO:
-			- Create Options Panel
-		
-		 */
 		
 		// Display Slider
 		add_action('wp_head', array($this, 'js_hps_display_slider'));
@@ -72,10 +73,23 @@ class hps_custom_menu {
 	}
 
 	/**
-	 * Enqueue scripts and styles.
+	 * Enqueue front end scripts and styles.
 	 */
-	public function js_slider_scripts() {
+	public function js_slider_scripts_frontend() {
 		wp_enqueue_style( 'js-slider-style', plugins_url( 'assets/css/styles.css', __FILE__ ) );
+	}
+
+	/**
+	 * Enqueue back end scripts and styles.
+	 */
+	public function js_slider_scripts_backend($hook) {
+		// Load only on ?page=mypluginname
+        if($hook != 'settings_page_js-homepage-slider') {
+                return;
+        }
+		wp_enqueue_media();
+        wp_enqueue_style( 'wp-color-picker');
+        wp_enqueue_script( 'js-slider-options', plugins_url('assets/js/options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 	}
 
 	/**
@@ -102,7 +116,7 @@ class hps_custom_menu {
 	*/
 	function js_hps_register_menu() {
 	    register_nav_menus( array(
-			'home-page-slider' => __( 'Home Page Slider', 'textdomain' )
+			'home-page-slider' => __( 'Home Page Slider', 'js_slider' )
 		) );
 	}
 	
@@ -244,11 +258,15 @@ class hps_custom_menu {
 	    
 	}
 
+	function js_hps_add_admin_menu(  ) { 
+		add_options_page( 'Home Page Slider', 'Home Page Slider', 'manage_options', 'js-homepage-slider', 'js_hps_options_page' );
+	}
+
 }
 
 // instantiate plugin's class
 $GLOBALS['js_hps'] = new hps_custom_menu();
 
-
+include_once( 'admin_options.php' );
 include_once( 'walkers/admin_menus_custom_walker.php' );
 include_once( 'walkers/front_slider_walker.php' );

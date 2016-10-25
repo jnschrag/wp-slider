@@ -9,7 +9,7 @@
 				<div class='featuredItem'>
 					<span class='description'><?php echo $feat_description; ?></span><br />
 					<?php echo $feat_title; ?><br />
-					<a href='<?php echo $feat_link; ?>' class='seeMore'><?php echo __($feat_cta, 'textdomain'); ?></a>
+					<a href='<?php echo $feat_link; ?>' class='seeMore'><?php echo __($feat_cta, 'js_slider'); ?></a>
 				</div>
 			</div>
 			<?php wp_nav_menu( array('theme_location' => $location,'walker' => $walker,'activeID' => $feat_id) ); ?>
