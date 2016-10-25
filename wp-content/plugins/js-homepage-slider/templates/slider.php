@@ -12,7 +12,7 @@
 					<a href='<?php echo $feat_link; ?>' class='seeMore'><?php echo __($feat_cta, 'js_slider'); ?></a>
 				</div>
 			</div>
-			<?php wp_nav_menu( array('theme_location' => $location,'walker' => $walker,'activeID' => $feat_id) ); ?>
+			<?php wp_nav_menu( array('theme_location' => $location,'walker' => $walker,'activeID' => $feat_id, 'hideFeature' => $hideFeature) ); ?>
 		</div>
 	</div>
 </div>

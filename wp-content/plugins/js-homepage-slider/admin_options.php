@@ -73,8 +73,6 @@ function js_hps_settings_init(  ) {
 // Set Setting Defaults
 $defaults = array(
     'js_hps_default_cta'   => 'See More',
-    'js_hps_include_featured' => 1,
-    'js_hps_layout_style' => 1,
     'js_hps_fb_color' => '#cccccc'
 
 );

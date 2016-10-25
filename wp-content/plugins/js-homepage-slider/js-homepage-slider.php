@@ -216,7 +216,14 @@ class hps_custom_menu {
 		$location = 'home-page-slider';
 		$options = get_option( 'js_hps_settings');
 
-		if ( has_nav_menu( $location ) && is_front_page() ) {
+		if($options['js_hps_show_on_pages'] == 'front') {
+			$showConditional = is_front_page();
+		}
+		else {
+			$showConditional = true;
+		}
+
+		if ( has_nav_menu( $location ) && $showConditional ) {
 		
 			$menu_items = wp_get_nav_menu_items($location);
 			$walker = new Slider_Menu_With_Description;
@@ -227,6 +234,14 @@ class hps_custom_menu {
 			$feat_description = "";
 			$feat_link = "";
 			$feat_id = "";
+
+			// Remove Featured Item from the side menu?
+			if($options['js_hps_include_featured'] == 1) {
+				$hideFeature = false;
+			}
+			else {
+				$hideFeature = true;
+			}
 
 			// Loop through the menu to get the featured item
 			foreach($menu_items as $key => $itemObj) {
