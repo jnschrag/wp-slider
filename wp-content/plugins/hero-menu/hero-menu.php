@@ -280,8 +280,6 @@ class HeroMenu {
 				$feat_bgpos_y = $menu_items[0]->bgpos_y;
 			}
 
-			echo "Featured Title: ".$feat_title;
-
 			if($options['js_hm_layout_style'] == "single") {
 				echo "<!-- START: Hero Menu Plugin -->\n";
 				include('templates/slider-single.php');
