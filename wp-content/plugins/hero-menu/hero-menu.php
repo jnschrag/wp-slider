@@ -1,16 +1,16 @@
 <?php
 /*
-Plugin Name: Home Page Slider
+Plugin Name: Hero Menu
 Plugin URL: hhttps://github.com/jnschrag/wp-slider
 Description: Creates a custom menu with a featured image on the main page.
 Version: 0.1
 Author: Jacque Schrag
 Author URI: http://jschrag.com
-Text Domain: js_hps
+Text Domain: heroMenu
 Domain Path: languages
 */
 
-class hps_custom_menu {
+class HeroMenu {
 
 
 	/*--------------------------------------------*
@@ -23,7 +23,7 @@ class hps_custom_menu {
 	function __construct() {
 
 		// load the plugin translation files
-		add_action( 'init', array( $this, 'js_slider' ) );
+		add_action( 'init', array( $this, 'textdomain' ) );
 
 		// load CSS & JavaScript
 		add_action( 'wp_enqueue_scripts', array($this, 'js_slider_scripts_frontend' ));
@@ -35,27 +35,27 @@ class hps_custom_menu {
 		add_action('admin_menu', array($this, 'add_slider_admin_menu_item'));
 
 		// Register Menu Location
-		add_action( 'after_setup_theme', array($this, 'js_hps_register_menu'));
+		add_action( 'after_setup_theme', array($this, 'js_hm_register_menu'));
 
 		// Register Options Link
-		add_action( 'admin_menu', array($this, 'js_hps_add_admin_menu' ));
+		add_action( 'admin_menu', array($this, 'js_hm_add_admin_menu' ));
 
 		// Register Plugin Options Page
-		add_action( 'admin_init', 'js_hps_settings_init' );
+		add_action( 'admin_init', 'js_hm_settings_init' );
 		
 		// add custom menu fields to menu
-		add_filter( 'wp_setup_nav_menu_item', array( $this, 'js_hps_add_custom_nav_fields' ) );
+		add_filter( 'wp_setup_nav_menu_item', array( $this, 'js_hm_add_custom_nav_fields' ) );
 
 		// save menu custom fields
-		add_action( 'wp_update_nav_menu_item', array( $this, 'js_hps_update_custom_nav_fields'), 10, 3 );
+		add_action( 'wp_update_nav_menu_item', array( $this, 'js_hm_update_custom_nav_fields'), 10, 3 );
 		
 		// edit menu walker
-		add_filter( 'wp_edit_nav_menu_walker', array( $this, 'js_hps_edit_walker'), 10, 2 );
+		add_filter( 'wp_edit_nav_menu_walker', array( $this, 'js_hm_edit_walker'), 10, 2 );
 
 		/*----------  Frontend Filters  ----------*/
 		
 		// Display Slider
-		add_action('wp_head', array($this, 'js_hps_display_slider'));
+		add_action('wp_head', array($this, 'js_hm_display_slider'));
 		
 
 	} // end constructor
@@ -69,7 +69,7 @@ class hps_custom_menu {
 	 * @return void
 	 */
 	public function textdomain() {
-		load_plugin_textdomain( 'js_hps', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'heroMenu', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
 	/**
@@ -79,16 +79,16 @@ class hps_custom_menu {
 		wp_enqueue_style( 'js-slider-style', plugins_url( 'assets/css/styles.css', __FILE__ ) );
 
 		// Include our custom CSS if we have any
-		$options = get_option( 'js_hps_settings');
+		$options = get_option( 'js_hm_settings');
 
-		if($options['js_hps_fb_color']) {
-			$css = "#homepage-slider-container .feature-background {background-color:".sanitize_text_field($options['js_hps_fb_color']).";}";
+		if($options['js_hm_fb_color']) {
+			$css = "#hero-menu-container .feature-background {background-color:".sanitize_text_field($options['js_hm_fb_color']).";}";
 			$css = wp_kses( $css, array( "\'", '\"' ) );
 			wp_add_inline_style('js-slider-style', $css);
 		}
 
-		if($options['js_hps_custom_css']) {
-			$css = sanitize_text_field($options['js_hps_custom_css']);
+		if($options['js_hm_custom_css']) {
+			$css = sanitize_text_field($options['js_hm_custom_css']);
 			$css = wp_kses( $css, array( "\'", '\"' ) );
 			wp_add_inline_style('js-slider-style', $css);
 		}
@@ -100,7 +100,7 @@ class hps_custom_menu {
 	 */
 	public function js_slider_scripts_backend($hook) {
 		// Load only on ?page=mypluginname
-        if($hook != 'settings_page_js-homepage-slider') {
+        if($hook != 'settings_page_hero-menu') {
                 return;
         }
 		wp_enqueue_media();
@@ -109,7 +109,7 @@ class hps_custom_menu {
 	}
 
 	/**
-	 * Register Home Page Slider in Admin Menu bar
+	 * Register Hero Menu in Admin Menu bar
 	 *
 	 * @access      public
 	 * @since       1.0 
@@ -117,10 +117,10 @@ class hps_custom_menu {
 	*/
 	function add_slider_admin_menu_item() {
 		$theme_locations = get_nav_menu_locations();
-		$menu_obj = get_term( $theme_locations['home-page-slider'], 'nav_menu' );
+		$menu_obj = get_term( $theme_locations['hero-menu'], 'nav_menu' );
 		$menuID = $menu_obj->term_id;
 
-	  add_menu_page(__('Home Page Slider'), __('Home Page Slider'), 'edit_theme_options', 'nav-menus.php?action=edit&menu='.$menuID, '', 'dashicons-images-alt2', 58);
+	  add_menu_page(__('Hero Menu'), __('Hero Menu'), 'edit_theme_options', 'nav-menus.php?action=edit&menu='.$menuID, '', 'dashicons-images-alt2', 58);
 	}
 
 	/**
@@ -130,9 +130,9 @@ class hps_custom_menu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hps_register_menu() {
+	function js_hm_register_menu() {
 	    register_nav_menus( array(
-			'home-page-slider' => __( 'Home Page Slider', 'js_slider' )
+			'hero-menu' => __( 'Hero Menu', 'js_slider' )
 		) );
 	}
 	
@@ -144,7 +144,7 @@ class hps_custom_menu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hps_add_custom_nav_fields( $menu_item ) {
+	function js_hm_add_custom_nav_fields( $menu_item ) {
 	
 	    $menu_item->featured_image = get_post_meta( $menu_item->ID, '_menu_item_featured_image', true );
 	    $menu_item->cta = get_post_meta( $menu_item->ID, '_menu_item_cta', true );
@@ -161,7 +161,7 @@ class hps_custom_menu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hps_update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
+	function js_hm_update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
 	
 	    // Check if element is properly sent
 	    if ( is_array( $_REQUEST['menu-item-featured-image']) ) {
@@ -193,9 +193,9 @@ class hps_custom_menu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hps_edit_walker($walker,$menu_id) {
+	function js_hm_edit_walker($walker,$menu_id) {
 		$locations = get_nav_menu_locations();
-		$sliderMenuID = $locations['home-page-slider'];
+		$sliderMenuID = $locations['hero-menu'];
 
 		if($menu_id == $sliderMenuID) {
 	    	return 'Walker_Nav_Menu_Edit_Custom';
@@ -213,11 +213,11 @@ class hps_custom_menu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hps_display_slider() {
-		$location = 'home-page-slider';
-		$options = get_option( 'js_hps_settings');
+	function js_hm_display_slider() {
+		$location = 'hero-menu';
+		$options = get_option( 'js_hm_settings');
 
-		if($options['js_hps_show_on_pages'] == 'front') {
+		if($options['js_hm_show_on_pages'] == 'front') {
 			$showConditional = is_front_page();
 		}
 		else {
@@ -237,7 +237,7 @@ class hps_custom_menu {
 			$feat_id = "";
 
 			// Remove Featured Item from the side menu?
-			if($options['js_hps_include_featured'] == 1) {
+			if($options['js_hm_include_featured'] == 1) {
 				$hideFeature = false;
 			}
 			else {
@@ -253,7 +253,7 @@ class hps_custom_menu {
 					$feat_description = $itemObj->description ?: $itemObj->type_label;
 					$feat_link = $itemObj->url;
 					$feat_id = $itemObj->object_id;
-					$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hps_default_cta']);
+					$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 					$feat_bgpos_x = $itemObj->bgpos_x;
 					$feat_bgpos_y = $itemObj->bgpos_y;
 					break;
@@ -265,7 +265,7 @@ class hps_custom_menu {
 						$feat_description = $itemObj->description ?: $itemObj->type_label;
 						$feat_link = $itemObj->url;
 						$feat_id = $itemObj->object_id;
-						$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hps_default_cta']);
+						$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 						$feat_bgpos_x = $itemObj->bgpos_x;
 						$feat_bgpos_y = $itemObj->bgpos_y;
 						break;
@@ -274,38 +274,38 @@ class hps_custom_menu {
 			}
 			// If no feature image was set, set featured item to the first item in the menu and the image to the fallback image
 			if(!$feat_image) {
-				$feat_image = sanitize_text_field($options['js_hps_fb_image']);
+				$feat_image = sanitize_text_field($options['js_hm_fb_image']);
 				$feat_title = $menu_items[0]->title;
 				$feat_description = $menu_items[0]->description ?: $menu_items[0]->type_label;
 				$feat_link = $menu_items[0]->url;
 				$feat_id = $menu_items[0]->object_id;
-				$feat_cta = $menu_items[0]->cta ?: sanitize_text_field($options['js_hps_default_cta']);
+				$feat_cta = $menu_items[0]->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 				$feat_bgpos_x = $menu_items[0]->bgpos_x;
 				$feat_bgpos_y = $menu_items[0]->bgpos_y;
 			}
 
-			if($options['js_hps_layout_style'] == "single") {
-				echo "<!-- START: WP Slider Plugin -->\n";
+			if($options['js_hm_layout_style'] == "single") {
+				echo "<!-- START: Hero Menu Plugin -->\n";
 				include('templates/slider-single.php');
-				echo "<!-- END: WP Slider Plugin -->\n";
+				echo "<!-- END: Hero Menu Plugin -->\n";
 			}
 			else {
-				echo "<!-- START: WP Slider Plugin -->\n";
+				echo "<!-- START: Hero Menu Plugin -->\n";
 				include('templates/slider-side.php');
-				echo "<!-- END: WP Slider Plugin -->\n";
+				echo "<!-- END: Hero Menu Plugin -->\n";
 			}
 		}
 	    
 	}
 
-	function js_hps_add_admin_menu(  ) { 
-		add_options_page( 'Home Page Slider', 'Home Page Slider', 'manage_options', 'js-homepage-slider', 'js_hps_options_page' );
+	function js_hm_add_admin_menu(  ) { 
+		add_options_page( 'Hero Menu', 'Hero Menu', 'manage_options', 'hero-menu', 'js_hm_options_page' );
 	}
 
 }
 
 // instantiate plugin's class
-$GLOBALS['js_hps'] = new hps_custom_menu();
+$GLOBALS['heroMenu'] = new HeroMenu();
 
 include_once( 'admin_options.php' );
 include_once( 'walkers/admin_menus_custom_walker.php' );

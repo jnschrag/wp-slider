@@ -1,7 +1,7 @@
-#homepage-slider-container {
+#hero-menu-container {
 }
 
-#homepage-slider-container .menu-home-page-slider-container {
+#hero-menu-container .menu-hero-menu-container {
 	max-width:35%;
 	height:100%;
 	overflow:hidden;
@@ -17,7 +17,7 @@
   	justify-content: center;
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu {
+#hero-menu-container .menu-hero-menu-container .menu {
 	padding:0;
 	margin:0;
 	list-style:none;
@@ -28,7 +28,7 @@
 	width:100%;
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu li {
+#hero-menu-container .menu-hero-menu-container .menu li {
 	margin-bottom:30px;
 	opacity:0.5;
 	-webkit-transition:opacity 0.3s ease-in-out;
@@ -38,27 +38,27 @@
 	transition:opacity 0.3s ease-in-out;
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu li:last-child {
+#hero-menu-container .menu-hero-menu-container .menu li:last-child {
 	margin-bottom:0px;
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu li:hover,
-#homepage-slider-container .menu-home-page-slider-container .menu li:active,
-#homepage-slider-container .menu-home-page-slider-container .menu li.activeItem {
+#hero-menu-container .menu-hero-menu-container .menu li:hover,
+#hero-menu-container .menu-hero-menu-container .menu li:active,
+#hero-menu-container .menu-hero-menu-container .menu li.activeItem {
 	opacity:1;
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu a {
+#hero-menu-container .menu-hero-menu-container .menu a {
 	color:#fff
 }
 
-#homepage-slider-container .menu-home-page-slider-container .menu .description {
+#hero-menu-container .menu-hero-menu-container .menu .description {
 	font-size:16px;
 	font-weight:700;
 	letter-spacing:0.6px;
 }
 
-#homepage-slider-container .feature-background {
+#hero-menu-container .feature-background {
 	height:560px;
 	background-size:cover;
 	position:relative;
@@ -66,13 +66,13 @@
 	background-position:50% 50%;
 }
 
-#homepage-slider-container .feature-background .overlay {
+#hero-menu-container .feature-background .overlay {
 	background:rgba(0,0,0,0.43);
 	width:100%;
 	height:100%;
 }
 
-#homepage-slider-container .featuredItem-container {
+#hero-menu-container .featuredItem-container {
 	max-width:55%;
 	height:100%;
 	display:flex;
@@ -81,7 +81,7 @@
 
 }
 
-#homepage-slider-container .featuredItem {
+#hero-menu-container .featuredItem {
 	z-index:6;
 	max-width:55%;
 	/*height:100%;*/
@@ -97,7 +97,7 @@
 	color:#fff;
 }
 
-#homepage-slider-container .description {
+#hero-menu-container .description {
 	color:#00b29e;
 	font-size:22px;
 	font-weight:900;
@@ -107,7 +107,7 @@
 	line-height:20px;
 }
 
-#homepage-slider-container a.seeMore {
+#hero-menu-container a.seeMore {
 	line-height:17px;
 	margin:0px;
 	padding:12px 35px;
@@ -120,13 +120,13 @@
 	border:1px solid #fff;
 }
 
-#homepage-slider-container a.seeMore:hover {
+#hero-menu-container a.seeMore:hover {
 	color:#fff;
 	background-color:#00b29e;
 }
 
 @media screen and (max-width: 768px){
-	.menu-home-page-slider-container {
+	.menu-hero-menu-container {
 		display:none !important
 
 	}
@@ -134,7 +134,7 @@
 		max-width:100% !important;
 		padding:10% 10% 10% 5% !important;
 	}
-	#homepage-slider-container .description {
+	#hero-menu-container .description {
 		font-size:16px !important;
 	}
 }
