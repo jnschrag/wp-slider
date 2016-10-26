@@ -3,7 +3,7 @@
 Plugin Name: Hero Menu
 Plugin URL: hhttps://github.com/jnschrag/wp-slider
 Description: Creates a custom menu with a featured image on the main page.
-Version: 0.1
+Version: 1.0
 Author: Jacque Schrag
 Author URI: http://jschrag.com
 Text Domain: heroMenu
