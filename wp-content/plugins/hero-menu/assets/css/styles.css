@@ -104,6 +104,10 @@
 	line-height:0.5em;
 }
 
+#hero-menu-container .featuredItem .title a {
+	color: #fff;
+}
+
 #hero-menu-container a.seeMore {
 	line-height:0.4em;
 	margin:0px;

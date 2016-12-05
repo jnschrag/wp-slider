@@ -22,6 +22,9 @@ class HeroMenu {
 	 */
 	function __construct() {
 
+		register_activation_hook( __FILE__, array($this, 'plugin_activated' ));
+        register_deactivation_hook( __FILE__, array($this, 'plugin_deactivated' ));
+
 		// load the plugin translation files
 		add_action( 'init', array( $this, 'textdomain' ) );
 
@@ -51,10 +54,17 @@ class HeroMenu {
 		
 		// edit menu walker
 		add_filter( 'wp_edit_nav_menu_walker', array( $this, 'js_hm_edit_walker'), 10, 2 );
-		
 
 	} // end constructor
-	
+
+	public function plugin_activated(){
+         // This will run when the plugin is activated, setup the database
+    }
+
+    public function plugin_deactivated(){
+        // This will run when the plugin is deactivated, use to delete the database
+        
+    }
 	
 	/**
 	 * Load the plugin's text domain
