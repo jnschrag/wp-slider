@@ -73,7 +73,12 @@ function js_hm_settings_init(  ) {
 // Set Setting Defaults
 $defaults = array(
     'js_hm_default_cta'   => 'See More',
-    'js_hm_fb_color' => '#cccccc'
+    'js_hm_fb_color' => '#cccccc',
+    'js_hm_fb_image' => null,
+	'js_hm_include_featured' => 1,
+	'js_hm_show_on_pages' => 'all',
+	'js_hm_layout_style' => 'side',
+	'js_hm_custom_css' => null	    
 
 );
 
@@ -127,8 +132,8 @@ function js_hm_include_featured_render(  ) {
 	$options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
 	?>
 	<label for='js_hm_settings[js_hm_include_featured]'>
-		<input type='checkbox' name='js_hm_settings[js_hm_include_featured]' <?php checked( $options['js_hm_include_featured'], 1 ); ?> value='1'> 
-		Yes
+		<input type="radio" name="js_hm_settings[js_hm_include_featured]" value="1" <?php checked(1, $options['js_hm_include_featured'], true); ?>> Yes
+        <input type="radio" name="js_hm_settings[js_hm_include_featured]" value="0" <?php checked(0, $options['js_hm_include_featured'], true); ?>> No
 	</label>
 	<p class='description'>Should the featured item also be included on the side menu?</p>
 	<?php
