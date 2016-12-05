@@ -84,6 +84,9 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu  {
 	    $title = empty( $item->label ) ? $title : $item->label;
 	    $description = empty( $item->description ) ? $item->type_label : $item->description;
 
+	    // Get our options
+	    $options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
+
 	    ?>
 	    <li id="menu-item-<?php echo $item_id; ?>" class="<?php echo implode(' ', $classes ); ?>">
 	        <dl class="menu-item-bar">
@@ -185,7 +188,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu  {
 	            <p class="field-custom description-wide">
 	                <label for="edit-menu-item-cta-<?php echo $item_id; ?>">
 	                    <?php _e( 'Call to Action Text' ); ?><br />
-	                    <input type="text" id="edit-menu-item-cta-<?php echo $item_id; ?>" class="widefat code edit-menu-item-cta" name="menu-item-cta[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->cta ); ?>" />
+	                    <input type="text" id="edit-menu-item-cta-<?php echo $item_id; ?>" class="widefat code edit-menu-item-cta" name="menu-item-cta[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->cta ); ?>" placeholder="<?php echo $options['js_hm_default_cta']; ?>" />
 	                </label>
 	            </p>
 	            <p class="field-custom description-thin">
