@@ -87,16 +87,16 @@ function js_hm_fb_image_render(  ) {
 	global $defaults;
 	$options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
 	?>
-	<input type='hidden' name='js_hm_settings[js_hm_fb_image]' value='<?php echo $options['js_hm_fb_image']; ?>' id='fb_image_input'>
-    <div class='image_container'>
+	<input type='hidden' name='js_hm_settings[js_hm_fb_image]' value='<?php echo $options['js_hm_fb_image']; ?>' id='fb_image_input' data-target='fb_image_input'>
+    <div id='image-container-fb_image_input'>
     	<?php
     		if($options['js_hm_fb_image']) {
-                    echo "<img src='".$options['js_hm_fb_image']."' style='width:200px;height:auto;cursor:pointer;' class='choose-meta-image-button' title='Change Image' /><br />";
-                    echo '<input type="button" id="remove-meta-image-button" class="button" value="Remove Image" />';
+                    echo "<img src='".$options['js_hm_fb_image']."' id='fb_image_input' style='width:200px;height:auto;cursor:pointer;' class='choose-meta-image-button' title='Change Image' data-target='fb_image_input' /><br />";
+                    echo '<input type="button" id="remove-meta-image-button" class="button" value="Remove Image" data-target="fb_image_input" />';
                 }
         ?>
     </div>
-    <input type="button" id="meta-image-button" class="button choose-meta-image-button" value="<?php _e( 'Choose or Upload an Image', 'text_domain' )?>" />
+    <input type="button" id="meta-image-button" class="button choose-meta-image-button" value="<?php _e( 'Choose or Upload an Image', 'text_domain' )?>" data-target="fb_image_input" />
 	<p class="description">If there is no featured image, this image will be used instead.</p>
 	<?php
 

@@ -105,12 +105,11 @@ class HeroMenu {
 	 */
 	public function js_slider_scripts_backend($hook) {
 		// Load only on ?page=mypluginname
-        if($hook != 'settings_page_hero-menu') {
-                return;
-        }
-		wp_enqueue_media();
-        wp_enqueue_style( 'wp-color-picker');
-        wp_enqueue_script( 'js-slider-options', plugins_url('assets/js/options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+        if($hook == 'settings_page_hero-menu' || $hook == 'nav-menus.php') {
+			wp_enqueue_media();
+	        wp_enqueue_style( 'wp-color-picker');
+	        wp_enqueue_script( 'js-slider-options', plugins_url('assets/js/options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+	    }
 	}
 
 	/**

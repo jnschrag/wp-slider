@@ -182,13 +182,24 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu  {
 	            <p class="field-custom description-wide">
 	                <label for="edit-menu-item-featured-image-<?php echo $item_id; ?>">
 	                    <?php _e( 'Featured Image (Overrides post featured image)' ); ?><br />
-	                    <input type="text" id="edit-menu-item-featured-image-<?php echo $item_id; ?>" class="widefat code edit-menu-item-featured-image" name="menu-item-featured-image[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->featured_image ); ?>" />
+	                    <input type="hidden" id="edit-menu-item-featured-image-<?php echo $item_id; ?>" class="widefat code edit-menu-item-featured-image" name="menu-item-featured-image[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->featured_image ); ?>" />
+				        <div id='image-container-edit-menu-item-featured-image-<?php echo $item_id; ?>'>
+				        	<?php
+					    		if($item->featured_image) {
+					                    echo "<img src='".$item->featured_image."' id='".$item_id."'style='width:200px;height:auto;cursor:pointer;' class='choose-meta-image-button' title='Change Image' data-target='edit-menu-item-featured-image-".$item_id."' /><br />";
+					                    echo '<input type="button" id="remove-meta-image-button" class="button" value="Remove Image" data-target="edit-menu-item-featured-image-'.$item_id.'" />';
+					                }
+					        ?>
+				        </div>
+				        <input type="button" id="meta-image-button-menu-item-featured-image-<?php echo $item_id; ?>" class="button choose-meta-image-button" data-target="edit-menu-item-featured-image-<?php echo $item_id; ?>" value="<?php _e( 'Choose or Upload an Image', 'text_domain' )?>" />
+
 	                </label>
 	            </p>
 	            <p class="field-custom description-wide">
 	                <label for="edit-menu-item-cta-<?php echo $item_id; ?>">
 	                    <?php _e( 'Call to Action Text' ); ?><br />
-	                    <input type="text" id="edit-menu-item-cta-<?php echo $item_id; ?>" class="widefat code edit-menu-item-cta" name="menu-item-cta[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->cta ); ?>" placeholder="<?php echo $options['js_hm_default_cta']; ?>" />
+	                    <input type="text" id="edit-menu-item-cta-<?php echo $item_id; ?>" class="widefat code edit-menu-item-cta" name="menu-item-cta[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->cta ); ?>" />
+	                    <span class="description"><?php _e('If left blank, button will say "'.$options['js_hm_default_cta'].'"'); ?></span>
 	                </label>
 	            </p>
 	            <p class="field-custom description-thin">
