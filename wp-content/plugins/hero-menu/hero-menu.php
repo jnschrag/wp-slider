@@ -166,28 +166,34 @@ class HeroMenu {
 	 * @return      void
 	*/
 	function js_hm_update_custom_nav_fields( $menu_id, $menu_item_db_id, $args ) {
+
+		$locations = get_nav_menu_locations();
+		$sliderMenuID = $locations['hero-menu'];
+
+		if($menu_id == $sliderMenuID) {
 	
-	    // Check if element is properly sent
-	    if ( is_array( $_REQUEST['menu-item-featured-image']) ) {
-	        $featured_image_value = $_REQUEST['menu-item-featured-image'][$menu_item_db_id];
-	        update_post_meta( $menu_item_db_id, '_menu_item_featured_image', $featured_image_value );
-	    }
+		    // Check if element is properly sent
+		    if ( is_array( $_REQUEST['menu-item-featured-image']) ) {
+		        $featured_image_value = $_REQUEST['menu-item-featured-image'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_featured_image', $featured_image_value );
+		    }
 
-	    if ( is_array( $_REQUEST['menu-item-cta']) ) {
-	        $cta_value = $_REQUEST['menu-item-cta'][$menu_item_db_id];
-	        update_post_meta( $menu_item_db_id, '_menu_item_cta', $cta_value );
-	    }
+		    if ( is_array( $_REQUEST['menu-item-cta']) ) {
+		        $cta_value = $_REQUEST['menu-item-cta'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_cta', $cta_value );
+		    }
 
-	    if ( is_array( $_REQUEST['menu-item-bgpos-x']) ) {
-	        $bgpos_x_value = $_REQUEST['menu-item-bgpos-x'][$menu_item_db_id];
-	        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_x', $bgpos_x_value );
-	    }
+		    if ( is_array( $_REQUEST['menu-item-bgpos-x']) ) {
+		        $bgpos_x_value = $_REQUEST['menu-item-bgpos-x'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_x', $bgpos_x_value );
+		    }
 
-	    if ( is_array( $_REQUEST['menu-item-bgpos-y']) ) {
-	        $bgpos_y_value = $_REQUEST['menu-item-bgpos-y'][$menu_item_db_id];
-	        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_y', $bgpos_y_value );
-	    }
-	    
+		    if ( is_array( $_REQUEST['menu-item-bgpos-y']) ) {
+		        $bgpos_y_value = $_REQUEST['menu-item-bgpos-y'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_y', $bgpos_y_value );
+		    }
+		}
+		    
 	}
 	
 	/**
