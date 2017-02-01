@@ -85,7 +85,7 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu  {
 	    $description = empty( $item->description ) ? $item->type_label : $item->description;
 
 	    // Get our options
-	    $options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
+	    $options = wp_parse_args(get_option( 'js_hm_settings'));
 
 	    ?>
 	    <li id="menu-item-<?php echo $item_id; ?>" class="<?php echo implode(' ', $classes ); ?>">
