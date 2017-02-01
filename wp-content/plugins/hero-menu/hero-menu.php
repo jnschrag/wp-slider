@@ -3,7 +3,7 @@
 Plugin Name: Hero Menu
 Plugin URL: hhttps://github.com/jnschrag/wp-slider
 Description: Creates a custom menu with a featured image on the main page.
-Version: 1.0
+Version: 1.2
 Author: Jacque Schrag
 Author URI: http://jschrag.com
 Text Domain: heroMenu
@@ -346,12 +346,10 @@ class HeroMenu {
 			// If custom layout was declared and exists, use it, otherwise default to one of the default templates
 			if ($customLayout != null && $newTemplate = locate_template('/hero-menu/'.$customLayout.'.php')) {
 				// yep, load the page template
-				echo "Success!";
 				echo "<!-- START: Hero Menu Plugin -->\n";
 				include($newTemplate);
 				echo "<!-- END: Hero Menu Plugin -->\n";
 			} else {
-				echo "Fail";
 				// Default to either single view or sidebar view
 				if($options['js_hm_layout_style'] == "single") {
 					echo "<!-- START: Hero Menu Plugin -->\n";
