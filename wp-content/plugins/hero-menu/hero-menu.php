@@ -154,6 +154,8 @@ class HeroMenu {
 	    $menu_item->cta = get_post_meta( $menu_item->ID, '_menu_item_cta', true );
 	    $menu_item->bgpos_x = get_post_meta( $menu_item->ID, '_menu_item_bgpos_x', true );
 	    $menu_item->bgpos_y = get_post_meta( $menu_item->ID, '_menu_item_bgpos_y', true );
+	    $menu_item->excerpt = get_post_meta( $menu_item->ID, '_menu_item_excerpt', true );
+	    $menu_item->date = get_post_meta( $menu_item->ID, '_menu_item_date', true );
 	    return $menu_item;
 	    
 	}
@@ -192,6 +194,16 @@ class HeroMenu {
 		        $bgpos_y_value = $_REQUEST['menu-item-bgpos-y'][$menu_item_db_id];
 		        update_post_meta( $menu_item_db_id, '_menu_item_bgpos_y', $bgpos_y_value );
 		    }
+
+		    if ( is_array( $_REQUEST['menu-item-excerpt']) ) {
+		        $excerpt_value = $_REQUEST['menu-item-excerpt'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_excerpt', $excerpt_value );
+		    }
+
+		    if ( is_array( $_REQUEST['menu-item-date']) ) {
+		        $date_value = $_REQUEST['menu-item-date'][$menu_item_db_id];
+		        update_post_meta( $menu_item_db_id, '_menu_item_date', $date_value );
+		    }
 		}
 		    
 	}
@@ -223,7 +235,7 @@ class HeroMenu {
 	 * @since       1.0 
 	 * @return      void
 	*/
-	function js_hm_display_slider() {
+	function js_hm_display_slider($customLayout = null) {
 		$location = 'hero-menu';
 		$options = get_option( 'js_hm_settings');
 
@@ -246,6 +258,8 @@ class HeroMenu {
 			$feat_description = "";
 			$feat_link = "";
 			$feat_id = "";
+			$feat_excerpt = "";
+			$feat_date = "";
 
 			// Remove Featured Item from the side menu?
 			if($options['js_hm_include_featured'] == 1) {
@@ -267,6 +281,8 @@ class HeroMenu {
 					$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 					$feat_bgpos_x = $itemObj->bgpos_x;
 					$feat_bgpos_y = $itemObj->bgpos_y;
+					$feat_excerpt = $itemObj->excerpt;
+					$feat_date = $itemObj->date;
 					break;
 				}
 				else {
@@ -279,6 +295,8 @@ class HeroMenu {
 						$feat_cta = $itemObj->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 						$feat_bgpos_x = $itemObj->bgpos_x;
 						$feat_bgpos_y = $itemObj->bgpos_y;
+						$feat_excerpt = $itemObj->excerpt;
+						$feat_date = $itemObj->date;
 						break;
 					}
 				}
@@ -293,17 +311,58 @@ class HeroMenu {
 				$feat_cta = $menu_items[0]->cta ?: sanitize_text_field($options['js_hm_default_cta']);
 				$feat_bgpos_x = $menu_items[0]->bgpos_x;
 				$feat_bgpos_y = $menu_items[0]->bgpos_y;
+				$feat_excerpt = $menu_items[0]->excerpt;
+				$feat_date = $menu_items[0]->date;
 			}
 
-			if($options['js_hm_layout_style'] == "single") {
-				echo "<!-- START: Hero Menu Plugin -->\n";
-				include('templates/slider-single.php');
-				echo "<!-- END: Hero Menu Plugin -->\n";
+			// Include the Featured Item's Excerpt
+			if($options['js_hm_include_excerpt'] == 1) {
+				$excerpt = "<div class='excerpt'>".$feat_excerpt."</div>";
 			}
 			else {
+				$excerpt = null;
+			}
+
+			// Include the Featured Item's Date
+			if($options['js_hm_include_date'] == 1) {
+				$date = "<div class='date'>".$feat_date."</div>";
+			}
+			else {
+				$date = null;
+			}
+
+			// Include the sidebar navigation
+			$sidebar = null;
+			if($options['js_hm_layout_style'] == "side") {
+				$sidebar = function() use ($location, $walker, $feat_id, $hideFeature) {
+					$options = array('theme_location' => $location,'walker' => $walker, 'container_class' => 'menu-hero-menu-container', 'activeID' => $feat_id, 'hideFeature' => $hideFeature);
+					wp_nav_menu( $options );
+				};
+			}
+			else {
+				$sidebar = function() {return false;};
+			}
+
+			// If custom layout was declared and exists, use it, otherwise default to one of the default templates
+			if ($customLayout != null && $newTemplate = locate_template('/hero-menu/'.$customLayout.'.php')) {
+				// yep, load the page template
+				echo "Success!";
 				echo "<!-- START: Hero Menu Plugin -->\n";
-				include('templates/slider-side.php');
+				include($newTemplate);
 				echo "<!-- END: Hero Menu Plugin -->\n";
+			} else {
+				echo "Fail";
+				// Default to either single view or sidebar view
+				if($options['js_hm_layout_style'] == "single") {
+					echo "<!-- START: Hero Menu Plugin -->\n";
+					include('templates/slider-single.php');
+					echo "<!-- END: Hero Menu Plugin -->\n";
+				}
+				else {
+					echo "<!-- START: Hero Menu Plugin -->\n";
+					include('templates/slider-side.php');
+					echo "<!-- END: Hero Menu Plugin -->\n";
+				}
 			}
 		}
 	    
@@ -318,8 +377,8 @@ class HeroMenu {
 // instantiate plugin's class
 $GLOBALS['heroMenu'] = new HeroMenu();
 
-function putHeroMenu() {
-	return $GLOBALS['heroMenu']->js_hm_display_slider();
+function putHeroMenu($customLayout = null) {
+	return $GLOBALS['heroMenu']->js_hm_display_slider($customLayout);
 }
 
 include_once( 'admin_options.php' );

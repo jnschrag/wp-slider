@@ -44,6 +44,22 @@ function js_hm_settings_init(  ) {
 	);
 
 	add_settings_field( 
+		'js_hm_include_excerpt', 
+		__( 'Include featured item\'s excerpt?', 'heroMenu' ), 
+		'js_hm_include_excerpt_render', 
+		'pluginPage', 
+		'js_hm_pluginPage_section' 
+	);
+
+	add_settings_field( 
+		'js_hm_include_date', 
+		__( 'Include featured item\'s date?', 'heroMenu' ), 
+		'js_hm_include_date_render', 
+		'pluginPage', 
+		'js_hm_pluginPage_section' 
+	);
+
+	add_settings_field( 
 		'js_hm_show_on_pages', 
 		__( 'Display menu on:', 'heroMenu' ), 
 		'js_hm_show_on_pages_render', 
@@ -76,6 +92,8 @@ $defaults = array(
     'js_hm_fb_color' => '#cccccc',
     'js_hm_fb_image' => null,
 	'js_hm_include_featured' => 1,
+	'js_hm_include_excerpt' => 0,
+	'js_hm_include_date' => 0,
 	'js_hm_show_on_pages' => 'all',
 	'js_hm_layout_style' => 'side',
 	'js_hm_custom_css' => null	    
@@ -138,6 +156,32 @@ function js_hm_include_featured_render(  ) {
 	<p class='description'>Should the featured item also be included on the side menu?</p>
 	<?php
 
+}
+
+function js_hm_include_excerpt_render(  ) { 
+
+	global $defaults;
+	$options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
+	?>
+	<label for='js_hm_settings[js_hm_include_excerpt]'>
+		<input type="radio" name="js_hm_settings[js_hm_include_excerpt]" value="1" <?php checked(1, $options['js_hm_include_excerpt'], true); ?>> Yes
+        <input type="radio" name="js_hm_settings[js_hm_include_excerpt]" value="0" <?php checked(0, $options['js_hm_include_excerpt'], true); ?>> No
+	</label>
+	<p class='description'>Should the featured item's excerpt be displayed?</p>
+	<?php
+}
+
+function js_hm_include_date_render(  ) { 
+
+	global $defaults;
+	$options = wp_parse_args(get_option( 'js_hm_settings', $defaults ), $defaults);
+	?>
+	<label for='js_hm_settings[js_hm_include_date]'>
+		<input type="radio" name="js_hm_settings[js_hm_include_date]" value="1" <?php checked(1, $options['js_hm_include_date'], true); ?>> Yes
+        <input type="radio" name="js_hm_settings[js_hm_include_date]" value="0" <?php checked(0, $options['js_hm_include_date'], true); ?>> No
+	</label>
+	<p class='description'>Should the featured item's date be displayed?</p>
+	<?php
 }
 
 

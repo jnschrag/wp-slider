@@ -214,6 +214,36 @@ class Walker_Nav_Menu_Edit_Custom extends Walker_Nav_Menu  {
 	                    <input type="text" id="edit-menu-item-bgpos-y-<?php echo $item_id; ?>" class="widefat code edit-menu-item-bgpos-y" name="menu-item-bgpos-y[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $item->bgpos_y ); ?>" />
 	                </label>
 	            </p>
+
+	            <!-- Excerpt & Date only if setting is turned on -->
+	            <?php if($options['js_hm_include_excerpt']) { 
+	            	$postExcerpt = strip_tags(apply_filters('the_excerpt', get_post_field('post_excerpt', $item->object_id)));
+	            	$excerpt = empty( $item->excerpt ) ? $postExcerpt : $item->excerpt;
+	           	?>
+
+	            <p class="field-custom description-thin">
+	                <label for="edit-menu-item-excerpt-<?php echo $item_id; ?>">
+	                    <?php _e( 'Excerpt:' ); ?><br />
+	                    <textarea id="edit-menu-item-bgpos-x-<?php echo $item_id; ?>" class="widefat code edit-menu-item-excerpt" name="menu-item-excerpt[<?php echo $item_id; ?>]"><?php echo esc_attr( $excerpt ); ?></textarea>
+	                    <span class="description"><?php _e('25 word maximum'); ?></span>
+	                </label>
+	            </p>
+	            <?php } ?>
+
+	        	<?php if($options['js_hm_include_date']) { 
+
+	        		$postDate = get_the_date('',$item->object_id);
+	        		$date = empty( $item->date ) ? $postDate : $item->date;
+
+	        	?>
+	            <p class="field-custom description-thin">
+	                <label for="edit-menu-item-date-<?php echo $item_id; ?>">
+	                    <?php _e( 'Date:' ); ?><br />
+	                    <input type="text" id="edit-menu-item-date-<?php echo $item_id; ?>" class="widefat code edit-menu-item-date" name="menu-item-date[<?php echo $item_id; ?>]" value="<?php echo esc_attr( $date ); ?>" />
+	                </label>
+	            </p>
+	            <?php } ?>
+
 	            <?php
 	            /*
 	             * end added field

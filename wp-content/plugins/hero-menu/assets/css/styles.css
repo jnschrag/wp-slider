@@ -108,6 +108,16 @@
 	color: #fff;
 }
 
+#hero-menu-container .date {
+	color:#00b29e;
+	font-size:0.4em;
+	font-weight:900;
+}
+
+#hero-menu-container .excerpt {
+	font-size: 0.3em;
+}
+
 #hero-menu-container a.seeMore {
 	line-height:0.4em;
 	margin:0px;
